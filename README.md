@@ -6,7 +6,7 @@ Laravel 5 - Warehouse to abstract the database layer with Repositories pattern
 
 - <a href="#installation">Installation</a>
     - <a href="#composer">Composer</a>
-    - <a href="#laravel-4">Laravel 4</a>
+    - <a href="#laravel">Laravel</a>
 - <a href="#methods">Methods</a>
     - <a href="#artesaoswarehousecontractsrepositoryinterface">RepositoryInterface</a>
     - <a href="#artesaoswarehousecontractsrepositorycriteriainterface">RepositoryCriteriaInterface</a>
@@ -19,7 +19,7 @@ Laravel 5 - Warehouse to abstract the database layer with Repositories pattern
 	- <a href="#create-a-criteria">Create a Criteria</a>
 	- <a href="#using-the-criteria-in-a-controller">Using the Criteria in a Controller</a>
 	- <a href="#using-the-requestcriteria">Using the RequestCriteria</a>
-- <a href="#using-presenter">Presenters</a>
+- <a href="#presenters">Presenters</a>
     - <a href="#fractal-presenter">Fractal Presenter</a>
         - <a href="#create-a-presenter">Create a Fractal Presenter</a>
     - <a href="#enabling-in-your-repository-1">Enabling in your Repository</a>
@@ -445,7 +445,7 @@ Sorting the results
 
 You can change the name of the parameters in the configuration file **config/warehouse.php**
 
-### Using Presenter
+### Presenters
 
 Presenter to wrap and render objects.
 
