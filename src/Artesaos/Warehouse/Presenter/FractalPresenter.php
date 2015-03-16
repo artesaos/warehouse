@@ -19,6 +19,16 @@ use League\Fractal\TransformerAbstract;
 abstract class FractalPresenter implements PresenterInterface {
 
     /**
+     * @var string
+     */
+    protected $resourceKeyItem = null;
+
+    /**
+     * @var string
+     */
+    protected $resourceKeyCollection = null;
+
+    /**
      * @var \League\Fractal\Manager
      */
     protected $fractal = null;
@@ -115,7 +125,7 @@ abstract class FractalPresenter implements PresenterInterface {
      */
     protected function transformItem($data)
     {
-        return new Item($data, $this->getTransformer() );
+        return new Item($data, $this->getTransformer(), $this->resourceKeyItem);
     }
 
     /**
@@ -124,7 +134,7 @@ abstract class FractalPresenter implements PresenterInterface {
      */
     protected function transformCollection($data)
     {
-        return new Collection($data, $this->getTransformer() );
+        return new Collection($data, $this->getTransformer(), $this->resourceKeyCollection);
     }
 
     /**
@@ -134,7 +144,7 @@ abstract class FractalPresenter implements PresenterInterface {
     protected function transformPaginator($paginator)
     {
         $collection = $paginator->getCollection();
-        $resource = new Collection($collection, $this->getTransformer() );
+        $resource = new Collection($collection, $this->getTransformer(), $this->resourceKeyCollection);
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
         return $resource;
     }
