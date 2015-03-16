@@ -21,7 +21,7 @@ abstract class FractalPresenter implements PresenterInterface {
     /**
      * @var \League\Fractal\Manager
      */
-    protected $fractal;
+    protected $fractal = null;
 
     /**
      * @var \League\Fractal\Resource\Collection
@@ -32,8 +32,31 @@ abstract class FractalPresenter implements PresenterInterface {
      *
      */
     public function __construct(){
-
         $this->fractal  = new Manager();
+        $this->parseIncludes();
+        $this->setupSerializer();
+    }
+
+    /**
+     * @return $this
+     */
+    protected function setupSerializer()
+    {
+        $serializer = $this->serializer();
+
+        if( $serializer instanceof SerializerAbstract ){
+            $this->fractal->setSerializer($serializer);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function parseIncludes()
+    {
+
         $request        = app('Illuminate\Http\Request');
         $paramIncludes  = config('warehouse.fractal.params.include','include');
 
@@ -41,19 +64,18 @@ abstract class FractalPresenter implements PresenterInterface {
         {
             $this->fractal->parseIncludes( $request->get( $paramIncludes ) );
         }
+
+        return $this;
     }
 
     /**
-     * Set Serializer
+     * Get Serializer
      *
-     * http://fractal.thephpleague.com/serializers/
-     *
-     * @param SerializerAbstract $serializer
-     * @return $this
+     * @return SerializerAbstract
      */
-    public function setSerializer(SerializerAbstract $serializer)
+    public function serializer()
     {
-        return $this->fractal->setSerializer($serializer);
+        return null;
     }
 
     /**
