@@ -39,7 +39,7 @@ abstract class FractalPresenter implements PresenterInterface {
 
         if ( $request->has( $paramIncludes ) )
         {
-            $this->fractal->parseIncludes( $request->has( $paramIncludes ) );
+            $this->fractal->parseIncludes( $request->get( $paramIncludes ) );
         }
     }
 
