@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
+use League\Fractal\Serializer\SerializerAbstract;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -27,8 +28,32 @@ abstract class FractalPresenter implements PresenterInterface {
      */
     protected $resource = null;
 
+    /**
+     *
+     */
     public function __construct(){
-        $this->fractal = new Manager();
+
+        $this->fractal  = new Manager();
+        $request        = app('Illuminate\Http\Request');
+        $paramIncludes  = config('warehouse.fractal.params.include','include');
+
+        if ( $request->has( $paramIncludes ) )
+        {
+            $this->fractal->parseIncludes( $request->has( $paramIncludes ) );
+        }
+    }
+
+    /**
+     * Set Serializer
+     *
+     * http://fractal.thephpleague.com/serializers/
+     *
+     * @param SerializerAbstract $serializer
+     * @return $this
+     */
+    public function setSerializer(SerializerAbstract $serializer)
+    {
+        return $this->fractal->setSerializer($serializer);
     }
 
     /**
@@ -66,7 +91,8 @@ abstract class FractalPresenter implements PresenterInterface {
      * @param $data
      * @return Item
      */
-    protected function transformItem($data){
+    protected function transformItem($data)
+    {
         return new Item($data, $this->getTransformer() );
     }
 
@@ -74,7 +100,8 @@ abstract class FractalPresenter implements PresenterInterface {
      * @param $data
      * @return \League\Fractal\Resource\Collection
      */
-    protected function transformCollection($data){
+    protected function transformCollection($data)
+    {
         return new Collection($data, $this->getTransformer() );
     }
 
@@ -82,7 +109,8 @@ abstract class FractalPresenter implements PresenterInterface {
      * @param AbstractPaginator|LengthAwarePaginator|Paginator $paginator
      * @return \League\Fractal\Resource\Collection
      */
-    protected function transformPaginator($paginator){
+    protected function transformPaginator($paginator)
+    {
         $collection = $paginator->getCollection();
         $resource = new Collection($collection, $this->getTransformer() );
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));

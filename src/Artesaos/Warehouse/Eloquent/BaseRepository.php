@@ -70,7 +70,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      *
      * @return mixed
      */
-    abstract function model();
+    abstract public function model();
 
     /**
      * Specify Presenter class name
