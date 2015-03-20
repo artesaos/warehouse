@@ -2,6 +2,11 @@
 
 Laravel 5 - Warehouse to abstract the database layer with Repositories pattern
 
+[![Total Downloads](https://poser.pugx.org/prettus/l5-repository/downloads.svg)](https://packagist.org/packages/artesaos/warehouse)
+[![Latest Stable Version](https://poser.pugx.org/prettus/l5-repository/v/stable.svg)](https://packagist.org/packages/artesaos/warehouse)
+[![Latest Unstable Version](https://poser.pugx.org/prettus/l5-repository/v/unstable.svg)](https://packagist.org/packages/artesaos/warehouse)
+[![License](https://poser.pugx.org/prettus/l5-repository/license.svg)](https://packagist.org/packages/artesaos/warehouse)
+
 ## Table of Contents
 
 - <a href="#installation">Installation</a>
@@ -31,7 +36,7 @@ Laravel 5 - Warehouse to abstract the database layer with Repositories pattern
 Add `artesaos/warehouse` to the "require" section of your `composer.json` file.
 
 ```json
-	"artesaos/warehouse": "dev-master"
+	"artesaos/warehouse": "1.0.*"
 ```
 
 Run `composer update` to get the latest version of the package.
