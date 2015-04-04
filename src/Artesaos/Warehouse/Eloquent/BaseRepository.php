@@ -70,7 +70,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      *
      * @return mixed
      */
-    abstract function model();
+    abstract public function model();
 
     /**
      * Specify Presenter class name
@@ -242,6 +242,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     public function with(array $relations)
     {
         $this->model = $this->model->with($relations);
+        return $this;
     }
 
     /**
