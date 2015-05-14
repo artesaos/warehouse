@@ -48,7 +48,6 @@ In your `config/app.php` add `'Artesaos\Warehouse\Providers\WarehouseServiceProv
 ```php
 'providers' => array(
     ...,
-    'Illuminate\Workbench\WorkbenchServiceProvider',
     'Artesaos\Warehouse\Providers\WarehouseServiceProvider',
 ),
 ```
@@ -209,7 +208,7 @@ class MyCriteria implements CriteriaInterface {
 
     public function apply($model, RepositoryInterface $repository)
     {
-        $query = $query->where('user_id','=', Auth::user()->id );
+        $query = $model->where('user_id','=', Auth::user()->id );
         return $query;
     }
 }
