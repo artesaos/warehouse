@@ -12,6 +12,8 @@
   "require": {
     "php": ">=5.4.0",
     "illuminate/support": "~5",
+    "illuminate/database": "~5",
+    "illuminate/pagination": "~5",
     "league/fractal": "0.11.*"
   },
   "require-dev": {
@@ -26,5 +28,5 @@
   "config": {
     "preferred-install": "dist"
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }
