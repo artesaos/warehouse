@@ -94,6 +94,14 @@ abstract class CommonRepository implements CommonContract
         return $this->save($model);
     }
 
+    /**
+     * Creates a Model object with the $data information
+     * If $data is an empty array creates an object with the Request data
+     *
+     * @param array $data
+     *
+     * @return Model
+     */
     public function create(array $data = [])
     {
         $data = (empty($data)) ? $this->request->all() : $data;
