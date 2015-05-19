@@ -11,7 +11,6 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "illuminate/config": "~5",
     "illuminate/support": "~5",
     "league/fractal": "0.11.*"
   },
@@ -21,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Artesaos\\Warehouse\\": "src/Artesaos/Warehouse/"
+      "Artesaos\\Warehouse\\": "src/"
     }
   },
   "config": {
