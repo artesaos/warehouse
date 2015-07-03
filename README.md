@@ -1,7 +1,8 @@
 # Artesãos Warehouse 
 
-Laravel 5 - Warehouse to abstract the database layer with Repositories pattern
+Laravel 5 - Warehouse to abstract the database layer with Repositories pattern.
 
+[![Package Status](https://img.shields.io/badge/status-abandoned-red.svg)](https://github.com/prettus/l5-repository) 
 [![Total Downloads](https://poser.pugx.org/artesaos/warehouse/downloads.svg)](https://packagist.org/packages/artesaos/warehouse)
 [![Latest Stable Version](https://poser.pugx.org/artesaos/warehouse/v/stable.svg)](https://packagist.org/packages/artesaos/warehouse)
 [![Latest Unstable Version](https://poser.pugx.org/artesaos/warehouse/v/unstable.svg)](https://packagist.org/packages/artesaos/warehouse)
