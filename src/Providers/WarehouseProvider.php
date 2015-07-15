@@ -19,7 +19,7 @@ class WarehouseProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Artesaos\Warehouse\Contracts\FractalFactory', 'Artesaos\Warehouse\FractalFactory');
+        $this->app->singleton(\Artesaos\Warehouse\Contracts\FractalFactory::class, \Artesaos\Warehouse\FractalFactory::class);
     }
 
     /**

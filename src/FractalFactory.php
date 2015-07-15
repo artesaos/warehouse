@@ -98,7 +98,9 @@ class FractalFactory implements FractalFactoryContract
      */
     protected function responseFractal(ResourceAbstract $data)
     {
-        if (!app('messages.transporter')->isEmpty()) $this->addFractalMeta($data, app('messages.transporter')->toArray());
+        if(isset(app()['warehouse.transporter'])) {
+            if (!app('warehouse.transporter')->isEmpty()) $this->addFractalMeta($data, app('warehouse.transporter')->toArray());
+        }
 
         $fractal = $this->getFractalFactory()->createData($data)->toArray();
 
