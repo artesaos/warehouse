@@ -12,6 +12,13 @@ use League\Fractal\TransformerAbstract;
 abstract class CommonRepository implements CommonContract
 {
     /**
+     * Model class for repo
+     *
+     * @var string
+     */
+    protected $modelClass;
+
+    /**
      * @var Request
      */
     protected $request;
@@ -34,11 +41,11 @@ abstract class CommonRepository implements CommonContract
 
         if (true == $paginate):
             return $query->paginate($take);
-        else:
-            if ($take > 0 || false == $take) $query->take($take);
-
-            return $query->get();
         endif;
+
+        if ($take > 0 || false == $take) $query->take($take);
+
+        return $query->get();
     }
 
     /**
