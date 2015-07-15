@@ -1,4 +1,4 @@
-<?php namespace Aprimore\Repositories;
+<?php namespace Artesaos\Warehouse\Repositories;
 
 use Artesaos\Warehouse\Contracts\Repositories\Common as CommonContract;
 use Illuminate\Database\Eloquent\Builder as EloquentQueryBuilder;
