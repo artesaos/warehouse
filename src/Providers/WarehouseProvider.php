@@ -10,7 +10,18 @@ class WarehouseProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = false;
+    protected $defer = true;
+
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__ . '/../../resources/config/warehouse.php' => config_path('warehouse.php')
+        ]);
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../resources/config/warehouse.php', 'warehouse'
+        );
+    }
 
     /**
      * Register the service provider.

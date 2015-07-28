@@ -68,6 +68,11 @@ class FractalFactory implements FractalFactoryContract
     {
         if (!$this->fractal):
             $this->fractal = new LeagueFractalFactory();
+
+            $serializer = config('warehouse.fractal.serializer', null);
+            if(!empty($serializer)) {
+                $this->fractal->setSerializer(app($serializer));
+            }
         endif;
 
         return $this->fractal;
