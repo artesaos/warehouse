@@ -7,7 +7,7 @@
 
 ## O que é Warehouse V2?
 
-Warehouse v2 é um pacote um pouco átipico, já que você pode usa-lo sem precisar baixar ele. Ele se classificária melhor como uma demosntração pronta para o uso.
+Warehouse v2 é um pacote um pouco átipico, já que você pode usa-lo sem precisar baixar ele. Ele se classificaria melhor como uma demonstração pronta para o uso..
 
 Muito se fala sobre o padrão de projeto Repository, básicamente ele é uma camada a mais entre sua aplicação e o banco de dados, no caso do Laravel sendo responsável direto por agir sobre seus models e queries.
 
