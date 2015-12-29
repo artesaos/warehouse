@@ -11,9 +11,19 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "illuminate/database": "~5"
+    "illuminate/database": "~5",
+    "illuminate/support": "~5",
+    "illuminate/pagination": "~5",
+    "illuminate/contracts": "~5"
+
   },
   "require-dev": {
+    "league/fractal": "~0.13",
+    "illuminate/container": "~5",
+    "illuminate/http": "~5"
+  },
+  "suggest": {
+    "league/fractal": "Form json response use fractal (0.13+)"
   },
   "autoload": {
     "psr-4": {
