@@ -41,4 +41,4 @@ No arquivo `config/app.php` adcione o service provider `Artesaos\Warehouse\Wareh
 ],
 ```
 
-> Este processo não é ogrigatório. Você só precisa fazer isso caso esteja usando o Fractal
+> Este processo não é obrigatório. Você só precisa fazer isso caso esteja usando o Fractal.
