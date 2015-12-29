@@ -23,5 +23,22 @@ OK! Tudo muito lindo, no papel. Nao são todos os projetos que precisam de uma a
 
 > Devido a facilidade e praticidade que o Eloquent e Collections trazem, este pacote nao retorna objetos planos e sim objetos Eloquent e Collections.
 
-Muitos não sabem e outros se esquecem que outro objetivo de um repositório é organizar e centralizar suas consultas e até mesmo. Essa é a principal abordagem que o Warehouse V2 pretende suprir.
+Muitos não sabem e outros se esquecem que outro objetivo de um repositório é organizar e centralizar suas consultas e até mesmo regras de negócio. Essa é a principal abordagem que o Warehouse V2 pretende suprir.
 
+-----------------
+
+## Instalando
+
+Execute `composer require artesaos/warehouse 2.x-dev`
+
+No arquivo `config/app.php` adcione o service provider `Artesaos\Warehouse\WarehouseServiceProvider`
+
+```php
+'providers' => [
+    // ...
+    Artesaos\Warehouse\Providers\WarehouseServiceProvider::class,
+    // ...
+],
+```
+
+> Este processo não é ogrigatório. Você só precisa fazer isso caso esteja usando o Fractal
