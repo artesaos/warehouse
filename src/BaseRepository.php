@@ -66,10 +66,10 @@ abstract class BaseRepository implements BaseRepositoryContract
     }
 
     /**
-     * @param      $column
-     * @param null $key
+     * @param string $column
+     * @param string|null $key
      *
-     * @return array|\Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection|array
      */
     public function lists($column, $key = null)
     {

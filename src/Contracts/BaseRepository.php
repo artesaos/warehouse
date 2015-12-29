@@ -22,7 +22,7 @@ interface BaseRepository
 
     /**
      * Retrieves a record by his id
-     * If fail is true $ fires ModelNotFoundException.
+     * If $fail is true fires ModelNotFoundException. When no record is found.
      *
      * @param int     $id
      * @param bool $fail
@@ -32,10 +32,10 @@ interface BaseRepository
     public function findByID($id, $fail = true);
 
     /**
-     * @param      $column
-     * @param null $key
+     * @param string $column
+     * @param string|null $key
      *
-     * @return array|\Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection|array
      */
     public function lists($column, $key = null);
 }
