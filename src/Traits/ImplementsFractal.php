@@ -7,6 +7,7 @@ use Artesaos\Warehouse\Contracts\FractalFactory;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use League\Fractal\TransformerAbstract;
 
 trait ImplementsFractal
 {
@@ -38,5 +39,13 @@ trait ImplementsFractal
     public function makeResponseCollection($collection, $meta = array())
     {
         return $this->getFractalFactory()->makeCollectionResponse($collection, $meta, $this->getTransformer());
+    }
+
+    /**
+     * @return TransformerAbstract
+     */
+    protected function getTransformer()
+    {
+        return app($this->transformerClass);
     }
 }

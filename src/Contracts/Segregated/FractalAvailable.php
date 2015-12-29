@@ -4,7 +4,6 @@ namespace Artesaos\Warehouse\Contracts\Segregated;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
-use League\Fractal\TransformerAbstract;
 
 interface FractalAvailable
 {
@@ -23,9 +22,4 @@ interface FractalAvailable
      * @return \Illuminate\Http\JsonResponse
      */
     public function makeResponseCollection($collection, $meta = array());
-
-    /**
-     * @return TransformerAbstract
-     */
-    public function getTransformer();
 }
