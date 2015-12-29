@@ -1,34 +1,29 @@
 <?php
 
-namespace Artesaos\Warehouse\Contracts\Repositories\Segregated;
+namespace Artesaos\Warehouse\Contracts\Segregated;
 
 use Illuminate\Database\Eloquent\Model;
 
-interface BasicCrud
+interface CrudRepository
 {
-
     /**
-     * Creates a Model object with the $data information
-     * If $data is an empty array creates an object with the Request data
+     * Creates a Model object with the $data information.
      *
      * @param array $data
      *
      * @return Model
      */
     public function create(array $data = []);
-
     /**
      * Updated model data, using $data
-     * If $data is an empty array using the Request data
-     * The sequence performs the Model update
+     * The sequence performs the Model update.
      *
      * @param Model $model
      * @param array $data
      *
      * @return bool
      */
-    public function update(Model &$model, array $data = []);
-
+    public function update($model, array $data = []);
     /**
      * Performs the save method of the model
      * The goal is to enable the implementation of your business logic before the command.
@@ -37,8 +32,7 @@ interface BasicCrud
      *
      * @return bool
      */
-    public function save(Model &$model);
-
+    public function save($model);
     /**
      * Run the delete command model.
      * The goal is to enable the implementation of your business logic before the command.
@@ -47,5 +41,14 @@ interface BasicCrud
      *
      * @return bool
      */
-    public function delete(Model &$model);
+    public function delete($model);
+
+    /**
+     * Creates a Model object with the $data information.
+     *
+     * @param array $data
+     *
+     * @return Model
+     */
+    public function factory(array $data = []);
 }

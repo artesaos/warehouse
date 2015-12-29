@@ -1,17 +1,18 @@
 <?php
 
-namespace Artesaos\Warehouse\Repositories;
+namespace Artesaos\Warehouse;
 
+use Artesaos\Warehouse\Contracts\BaseRepository as BaseRepositoryContract;
 use Illuminate\Database\Eloquent\Builder as EloquentQueryBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Pagination\AbstractPaginator as Paginator;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class BaseRepository
+abstract class BaseRepository implements BaseRepositoryContract
 {
     /**
-     * Model class for repo
+     * Model class for repo.
      *
      * @var string
      */
@@ -26,21 +27,33 @@ abstract class BaseRepository
      */
     protected function doQuery($query = null, $take = 15, $paginate = true)
     {
-        if (is_null($query)) $query = $this->newQuery();
+        if (is_null($query)) {
+            $query = $this->newQuery();
+        }
 
         if (true == $paginate):
             return $query->paginate($take);
         endif;
 
-        if ($take > 0 || false == $take) $query->take($take);
+        if ($take > 0 || false == $take) {
+            $query->take($take);
+        }
 
         return $query->get();
     }
 
     /**
+     * @return EloquentQueryBuilder|QueryBuilder
+     */
+    protected function newQuery()
+    {
+        return app()->make($this->modelClass)->newQuery();
+    }
+
+    /**
      * Returns all records.
      * If $take is false then brings all records
-     * If $paginate is true returns Paginator instance
+     * If $paginate is true returns Paginator instance.
      *
      * @param int  $take
      * @param bool $paginate
@@ -52,13 +65,23 @@ abstract class BaseRepository
         return $this->doQuery(null, $take, $paginate);
     }
 
+    /**
+     * @param      $column
+     * @param null $key
+     *
+     * @return array|\Illuminate\Support\Collection
+     */
+    public function lists($column, $key = null)
+    {
+        return $this->newQuery()->lists($column, $key);
+    }
 
     /**
      * Retrieves a record by his id
-     * If fail is true $ fires ModelNotFoundException
+     * If fail is true $ fires ModelNotFoundException.
      *
      * @param int     $id
-     * @param boolean $fail
+     * @param bool $fail
      *
      * @return Model
      */
@@ -69,13 +92,5 @@ abstract class BaseRepository
         endif;
 
         return $this->newQuery()->find($id);
-    }
-
-    /**
-     * @return EloquentQueryBuilder|QueryBuilder
-     */
-    protected function newQuery()
-    {
-        return app()->make($this->modelClass)->newQuery();
     }
 }

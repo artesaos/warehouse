@@ -1,24 +1,19 @@
 {
   "name": "artesaos/warehouse",
-  "description": "Laravel 5 - Warehouse to abstract the database layer with Repositories pattern",
+  "description": "Artesãos Warehouse V2 - A simple and direct approach to repositories!",
   "keywords": ["laravel5", "laravel", "repository", "eloquent", "model", "warehouse"],
   "license": "MIT",
   "authors": [
     {
-      "name": "Anderson Andrade",
-      "email": "contato@andersonandra.de"
+      "name": "Vinicius Reis",
+      "email": "luiz.vinicius73@gmail.com"
     }
   ],
   "require": {
     "php": ">=5.4.0",
-    "illuminate/support": "~5",
     "illuminate/database": "~5",
-    "illuminate/pagination": "~5",
-    "league/fractal": "^0.12"
   },
   "require-dev": {
-    "phpunit/phpunit": "4.*",
-    "phpspec/phpspec": "2.1.x"
   },
   "autoload": {
     "psr-4": {

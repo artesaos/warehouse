@@ -1,41 +1,55 @@
 <?php
 
-namespace Artesaos\Warehouse\Traits\Repositories;
+namespace Artesaos\Warehouse\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 
-trait BasicCrudTrait
+trait CrudMethods
 {
     /**
      * Updated model data, using $data
-     * The sequence performs the Model update
+     * The sequence performs the Model update.
      *
      * @param Model $model
      * @param array $data
      *
      * @return bool
      */
-    public function update(Model &$model, array $data = array())
+    public function update($model, array $data = [])
     {
-        if (empty($data)) $data = $this->request->all();
-
-        $model->fill($data);
+        $this->setModelData($model, $data);
 
         return $this->save($model);
     }
 
     /**
-     * Creates a Model object with the $data information
+     * Creates a Model object with the $data information.
      *
+     * @param array $data
+     *
+     * @return Model
+     */
+    public function factory(array $data = [])
+    {
+        $model = $this->newQuery()->getModel()->newInstance();
+
+        $this->setModelData($model, $data);
+
+        return $model;
+    }
+
+    /**
      * @param array $data
      *
      * @return Model
      */
     public function create(array $data = [])
     {
-        $data = (empty($data)) ? $this->request->all() : $data;
+        $model = $this->factory($data);
 
-        return $this->newQuery()->getModel()->newInstance($data);
+        $this->save($model);
+
+        return $model;
     }
 
     /**
@@ -46,9 +60,8 @@ trait BasicCrudTrait
      *
      * @return bool
      */
-    public function save(Model &$model)
+    public function save($model)
     {
-        # your logic
         return $model->save();
     }
 
@@ -60,9 +73,8 @@ trait BasicCrudTrait
      *
      * @return bool
      */
-    public function delete(Model &$model)
+    public function delete($model)
     {
-        # your logic
         return $model->delete();
     }
 }
