@@ -37,6 +37,15 @@ trait CrudMethods
 
         return $model;
     }
+    
+    /**
+     * @param Model $model
+     * @param array $data
+     */
+    protected function setModelData($model, array $data)
+    {
+        $model->fill($data);
+    }
 
     /**
      * @param array $data
