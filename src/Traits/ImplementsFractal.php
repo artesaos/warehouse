@@ -3,7 +3,6 @@
 namespace Artesaos\Warehouse\Traits;
 
 use Artesaos\Warehouse\Contracts\FractalFactory;
-
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -25,7 +24,7 @@ trait ImplementsFractal
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function makeResponseItem($item, $meta = array())
+    public function makeResponseItem($item, $meta = [])
     {
         return $this->getFractalFactory()->makeItemResponse($item, $meta, $this->getTransformer());
     }
@@ -36,7 +35,7 @@ trait ImplementsFractal
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function makeResponseCollection($collection, $meta = array())
+    public function makeResponseCollection($collection, $meta = [])
     {
         return $this->getFractalFactory()->makeCollectionResponse($collection, $meta, $this->getTransformer());
     }

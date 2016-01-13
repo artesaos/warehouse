@@ -2,9 +2,9 @@
 
 namespace Artesaos\Warehouse;
 
-use Illuminate\Support\ServiceProvider;
-use Artesaos\Warehouse\Fractal\FractalFactory;
 use Artesaos\Warehouse\Contracts\FractalFactory as FractalFactoryContract;
+use Artesaos\Warehouse\Fractal\FractalFactory;
+use Illuminate\Support\ServiceProvider;
 
 class WarehouseServiceProvider extends ServiceProvider
 {
@@ -17,10 +17,10 @@ class WarehouseServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $resourcesDir = __DIR__ . '/../resources/';
-        $this->publishes([$resourcesDir . 'config/warehouse.php' => config_path('warehouse.php')]);
+        $resourcesDir = __DIR__.'/../resources/';
+        $this->publishes([$resourcesDir.'config/warehouse.php' => config_path('warehouse.php')]);
 
-        $this->mergeConfigFrom($resourcesDir . 'config/warehouse.php', 'warehouse');
+        $this->mergeConfigFrom($resourcesDir.'config/warehouse.php', 'warehouse');
     }
 
     /**

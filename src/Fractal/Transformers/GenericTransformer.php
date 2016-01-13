@@ -21,7 +21,7 @@ class GenericTransformer extends TransformerAbstract
         if (is_object($data)):
             if ($data instanceof Arrayable):
                 return $data->toArray();
-            endif;
+        endif;
         endif;
 
         return (array) $data;

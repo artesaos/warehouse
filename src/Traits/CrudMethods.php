@@ -37,7 +37,7 @@ trait CrudMethods
 
         return $model;
     }
-    
+
     /**
      * @param Model $model
      * @param array $data

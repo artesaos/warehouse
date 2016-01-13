@@ -8,17 +8,17 @@ use League\Fractal\TransformerAbstract;
 interface FractalFactory
 {
     /**
-     * @param ArrayAccess $collection
-     * @param array $meta
+     * @param ArrayAccess              $collection
+     * @param array                    $meta
      * @param TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function makeCollectionResponse(ArrayAccess $collection, array $meta = array(), TransformerAbstract $transformer = null);
+    public function makeCollectionResponse(ArrayAccess $collection, array $meta = [], TransformerAbstract $transformer = null);
 
     /**
-     * @param ArrayAccess $item
-     * @param array $meta
+     * @param ArrayAccess              $item
+     * @param array                    $meta
      * @param TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse
@@ -30,7 +30,7 @@ interface FractalFactory
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function makeEmptyResponse(array $meta = array());
+    public function makeEmptyResponse(array $meta = []);
 
     /**
      * @param string $key

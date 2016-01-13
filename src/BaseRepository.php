@@ -4,10 +4,10 @@ namespace Artesaos\Warehouse;
 
 use Artesaos\Warehouse\Contracts\BaseRepository as BaseRepositoryContract;
 use Illuminate\Database\Eloquent\Builder as EloquentQueryBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Pagination\AbstractPaginator as Paginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Pagination\AbstractPaginator as Paginator;
 
 abstract class BaseRepository implements BaseRepositoryContract
 {
@@ -66,7 +66,7 @@ abstract class BaseRepository implements BaseRepositoryContract
     }
 
     /**
-     * @param string $column
+     * @param string      $column
      * @param string|null $key
      *
      * @return \Illuminate\Support\Collection|array
@@ -80,7 +80,7 @@ abstract class BaseRepository implements BaseRepositoryContract
      * Retrieves a record by his id
      * If fail is true $ fires ModelNotFoundException.
      *
-     * @param int     $id
+     * @param int  $id
      * @param bool $fail
      *
      * @return Model

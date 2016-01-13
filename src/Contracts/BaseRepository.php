@@ -2,8 +2,8 @@
 
 namespace Artesaos\Warehouse\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\AbstractPaginator as Paginator;
 
 interface BaseRepository
@@ -24,7 +24,7 @@ interface BaseRepository
      * Retrieves a record by his id
      * If $fail is true fires ModelNotFoundException. When no record is found.
      *
-     * @param int     $id
+     * @param int  $id
      * @param bool $fail
      *
      * @return Model
@@ -32,7 +32,7 @@ interface BaseRepository
     public function findByID($id, $fail = true);
 
     /**
-     * @param string $column
+     * @param string      $column
      * @param string|null $key
      *
      * @return \Illuminate\Support\Collection|array

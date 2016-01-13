@@ -9,17 +9,17 @@ interface FractalAvailable
 {
     /**
      * @param Model|Arrayable $item
-     * @param array $meta
+     * @param array           $meta
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function makeResponseItem($item, $meta = array());
+    public function makeResponseItem($item, $meta = []);
 
     /**
      * @param \Illuminate\Database\Eloquent\Collection $collection
-     * @param array $meta
+     * @param array                                    $meta
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function makeResponseCollection($collection, $meta = array());
+    public function makeResponseCollection($collection, $meta = []);
 }
