@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace Artesaos\Warehouse\Fractal;
 
@@ -6,16 +7,16 @@ use ArrayAccess;
 use Artesaos\Warehouse\Contracts\FractalFactory as FractalFactoryContract;
 use Artesaos\Warehouse\Fractal\Transformers\GenericTransformer;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use League\Fractal\Manager as LeagueFractalFactory;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection as FractalCollection;
 use League\Fractal\Resource\Item as FractalItem;
 use League\Fractal\Resource\ResourceAbstract;
 use League\Fractal\TransformerAbstract;
-use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class FractalFactory implements FractalFactoryContract
 {
@@ -42,8 +43,8 @@ class FractalFactory implements FractalFactoryContract
     /**
      * FractalFactory constructor.
      *
-     * @param Request $request
-     * @param Container $app
+     * @param Request         $request
+     * @param Container       $app
      * @param ResponseFactory $response
      */
     public function __construct(Request $request, Container $app, ResponseFactory $response)
@@ -60,7 +61,7 @@ class FractalFactory implements FractalFactoryContract
      */
     protected function isPaged($collection)
     {
-        return (is_a($collection, \Illuminate\Contracts\Pagination\LengthAwarePaginator::class));
+        return is_a($collection, \Illuminate\Contracts\Pagination\LengthAwarePaginator::class);
     }
 
     /**
@@ -93,11 +94,11 @@ class FractalFactory implements FractalFactoryContract
         if (!$this->fractal):
             $this->fractal = new LeagueFractalFactory();
 
-            $serializer = $this->app['config']->get('warehouse.fractal.serializer', null);
+        $serializer = $this->app['config']->get('warehouse.fractal.serializer', null);
 
-            if(!empty($serializer)) {
-                $this->fractal->setSerializer($this->app->make($serializer));
-            }
+        if (!empty($serializer)) {
+            $this->fractal->setSerializer($this->app->make($serializer));
+        }
         endif;
 
         return $this->fractal;
@@ -105,8 +106,8 @@ class FractalFactory implements FractalFactoryContract
 
     /**
      * @param ResourceAbstract $resource
-     * @param string $key
-     * @param string|null $value
+     * @param string           $key
+     * @param string|null      $value
      *
      * @return void
      */
@@ -115,8 +116,7 @@ class FractalFactory implements FractalFactoryContract
         if (is_array($key)):
             foreach ($key as $k => $v):
                 $resource->setMetaValue($k, $v);
-            endforeach;
-        else:
+        endforeach; else:
             $resource->setMetaValue($key, $value);
         endif;
     }
@@ -142,7 +142,9 @@ class FractalFactory implements FractalFactoryContract
     {
         $include = $this->request->get($key, '');
 
-        if (empty($include)) return [];
+        if (empty($include)) {
+            return [];
+        }
 
         $include = explode(',', $include);
 
@@ -156,7 +158,9 @@ class FractalFactory implements FractalFactoryContract
     {
         $include = $this->getRequestIncludes();
 
-        if (!empty($include)) $this->getFractalFactory()->parseIncludes($include);
+        if (!empty($include)) {
+            $this->getFractalFactory()->parseIncludes($include);
+        }
     }
 
     /**
@@ -165,7 +169,9 @@ class FractalFactory implements FractalFactoryContract
      */
     protected function modelIncludes($item, $include)
     {
-        if ($item instanceof Model) $item->load($include);
+        if ($item instanceof Model) {
+            $item->load($include);
+        }
     }
 
     /**
@@ -192,7 +198,7 @@ class FractalFactory implements FractalFactoryContract
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function makeEmptyResponse(array $metas = array())
+    public function makeEmptyResponse(array $metas = [])
     {
         $resource = $this->makeFractalItem([], $this->getTransformer());
 
@@ -224,13 +230,13 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess $collection
-     * @param array $meta
+     * @param ArrayAccess              $collection
+     * @param array                    $meta
      * @param TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function makeCollectionResponse(ArrayAccess $collection, array $meta = array(), TransformerAbstract $transformer = null)
+    public function makeCollectionResponse(ArrayAccess $collection, array $meta = [], TransformerAbstract $transformer = null)
     {
         $this->loadFractalIncludes();
 
@@ -241,7 +247,7 @@ class FractalFactory implements FractalFactoryContract
             $collection = $collection->getIterator();
             $resource = $this->makeFractalCollection($collection, $this->getTransformer($transformer));
             $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
-        }else {
+        } else {
             $resource = $this->makeFractalCollection($collection, $this->getTransformer($transformer));
         }
 

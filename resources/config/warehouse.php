@@ -2,6 +2,6 @@
 
 return [
     'fractal' => [
-        'serializer' => null
-    ]
+        'serializer' => null,
+    ],
 ];

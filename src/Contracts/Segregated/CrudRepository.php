@@ -14,6 +14,7 @@ interface CrudRepository
      * @return Model
      */
     public function create(array $data = []);
+
     /**
      * Updated model data, using $data
      * The sequence performs the Model update.
@@ -24,6 +25,7 @@ interface CrudRepository
      * @return bool
      */
     public function update($model, array $data = []);
+
     /**
      * Performs the save method of the model
      * The goal is to enable the implementation of your business logic before the command.
@@ -33,6 +35,7 @@ interface CrudRepository
      * @return bool
      */
     public function save($model);
+
     /**
      * Run the delete command model.
      * The goal is to enable the implementation of your business logic before the command.
