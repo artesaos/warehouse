@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Artesaos\Warehouse\Fractal;
 
 use ArrayAccess;
@@ -43,8 +42,8 @@ class FractalFactory implements FractalFactoryContract
     /**
      * FractalFactory constructor.
      *
-     * @param Request $request
-     * @param Container $app
+     * @param Request         $request
+     * @param Container       $app
      * @param ResponseFactory $response
      */
     public function __construct(Request $request, Container $app, ResponseFactory $response)
@@ -65,7 +64,7 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess $collection
+     * @param ArrayAccess         $collection
      * @param TransformerAbstract $transform
      *
      * @return FractalCollection
@@ -76,7 +75,7 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess $item
+     * @param ArrayAccess         $item
      * @param TransformerAbstract $transform
      *
      * @return FractalItem
@@ -106,8 +105,8 @@ class FractalFactory implements FractalFactoryContract
 
     /**
      * @param ResourceAbstract $resource
-     * @param string $key
-     * @param string|null $value
+     * @param string           $key
+     * @param string|null      $value
      *
      * @return void
      */
@@ -209,8 +208,8 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess $item
-     * @param array $meta
+     * @param ArrayAccess         $item
+     * @param array               $meta
      * @param TransformerAbstract $transformer
      *
      * @return \Illuminate\Http\JsonResponse
@@ -231,8 +230,8 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess $collection
-     * @param array $meta
+     * @param ArrayAccess              $collection
+     * @param array                    $meta
      * @param TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse
