@@ -43,8 +43,8 @@ class FractalFactory implements FractalFactoryContract
     /**
      * FractalFactory constructor.
      *
-     * @param Request         $request
-     * @param Container       $app
+     * @param Request $request
+     * @param Container $app
      * @param ResponseFactory $response
      */
     public function __construct(Request $request, Container $app, ResponseFactory $response)
@@ -65,7 +65,7 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess         $collection
+     * @param ArrayAccess $collection
      * @param TransformerAbstract $transform
      *
      * @return FractalCollection
@@ -76,7 +76,7 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess         $item
+     * @param ArrayAccess $item
      * @param TransformerAbstract $transform
      *
      * @return FractalItem
@@ -91,34 +91,35 @@ class FractalFactory implements FractalFactoryContract
      */
     protected function getFractalFactory()
     {
-        if (!$this->fractal):
+        if (!$this->fractal) {
             $this->fractal = new LeagueFractalFactory();
 
-        $serializer = $this->app['config']->get('warehouse.fractal.serializer', null);
+            $serializer = $this->app['config']->get('warehouse.fractal.serializer', null);
 
-        if (!empty($serializer)) {
-            $this->fractal->setSerializer($this->app->make($serializer));
+            if (!empty($serializer)) {
+                $this->fractal->setSerializer($this->app->make($serializer));
+            }
         }
-        endif;
 
         return $this->fractal;
     }
 
     /**
      * @param ResourceAbstract $resource
-     * @param string           $key
-     * @param string|null      $value
+     * @param string $key
+     * @param string|null $value
      *
      * @return void
      */
     protected function addFractalMeta(ResourceAbstract $resource, $key, $value = null)
     {
-        if (is_array($key)):
-            foreach ($key as $k => $v):
+        if (is_array($key)) {
+            foreach ($key as $k => $v) {
                 $resource->setMetaValue($k, $v);
-        endforeach; else:
+            }
+        } else {
             $resource->setMetaValue($key, $value);
-        endif;
+        }
     }
 
     /**
@@ -208,8 +209,8 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess         $item
-     * @param array               $meta
+     * @param ArrayAccess $item
+     * @param array $meta
      * @param TransformerAbstract $transformer
      *
      * @return \Illuminate\Http\JsonResponse
@@ -230,8 +231,8 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param ArrayAccess              $collection
-     * @param array                    $meta
+     * @param ArrayAccess $collection
+     * @param array $meta
      * @param TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse

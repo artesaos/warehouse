@@ -31,9 +31,9 @@ abstract class BaseRepository implements BaseRepositoryContract
             $query = $this->newQuery();
         }
 
-        if (true == $paginate):
+        if (true == $paginate) {
             return $query->paginate($take);
-        endif;
+        }
 
         if ($take > 0 || false == $take) {
             $query->take($take);
@@ -87,9 +87,9 @@ abstract class BaseRepository implements BaseRepositoryContract
      */
     public function findByID($id, $fail = true)
     {
-        if ($fail):
+        if ($fail) {
             return $this->newQuery()->findOrFail($id);
-        endif;
+        }
 
         return $this->newQuery()->find($id);
     }
