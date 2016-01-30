@@ -35,7 +35,7 @@ abstract class BaseRepository implements BaseRepositoryContract
             return $query->paginate($take);
         }
 
-        if ($take > 0 || false == $take) {
+        if ($take > 0 || false !== $take) {
             $query->take($take);
         }
 
