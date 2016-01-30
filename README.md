@@ -118,7 +118,7 @@ protected function doQuery($query = null, $take = 15, $paginate = true)
         return $query->paginate($take);
     endif;
 
-    if ($take > 0 || false == $take) {
+    if ($take > 0 || false != $take) {
         $query->take($take);
     }
 
