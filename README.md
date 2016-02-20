@@ -19,7 +19,7 @@ Há muita filosofia por trás desse modelo. No seu modo mais puro os métodos de
 
 #### O mundo real hoje
 
-OK! Tudo muito lindo, no papel. Nao são todos os projetos que precisam de uma abordagem assim, se você usa o Laravel abrir mão do Eloquent não é algo que todos cojitem fazer. E trocar de banco de dados no Laravel não é uma tarefa tão complexa, graças ao Eloquent.
+OK! Tudo muito lindo, no papel. Não são todos os projetos que precisam de uma abordagem assim, se você usa o Laravel abrir mão do Eloquent não é algo que todos cojitem fazer. E trocar de banco de dados no Laravel não é uma tarefa tão complexa, graças ao Eloquent.
 
 > Devido a facilidade e praticidade que o Eloquent e Collections trazem, este pacote nao retorna objetos planos e sim objetos Eloquent e Collections.
 
