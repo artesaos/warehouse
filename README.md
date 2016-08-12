@@ -36,7 +36,7 @@ No arquivo `config/app.php` adcione o service provider `Artesaos\Warehouse\Wareh
 ```php
 'providers' => [
     // ...
-    Artesaos\Warehouse\Providers\WarehouseServiceProvider::class,
+    Artesaos\Warehouse\WarehouseServiceProvider::class,
     // ...
 ],
 ```
