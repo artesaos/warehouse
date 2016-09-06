@@ -1,525 +1,128 @@
-# Artesãos Warehouse 
+# Artesãos Warehouse V2 - A simple and direct approach to repositories!
+>>>>>>> develop
 
-Laravel 5 - Warehouse to abstract the database layer with Repositories pattern.
-
-[![Package Status](https://img.shields.io/badge/status-abandoned-red.svg)](https://github.com/prettus/l5-repository) 
 [![Total Downloads](https://poser.pugx.org/artesaos/warehouse/downloads.svg)](https://packagist.org/packages/artesaos/warehouse)
 [![Latest Stable Version](https://poser.pugx.org/artesaos/warehouse/v/stable.svg)](https://packagist.org/packages/artesaos/warehouse)
 [![Latest Unstable Version](https://poser.pugx.org/artesaos/warehouse/v/unstable.svg)](https://packagist.org/packages/artesaos/warehouse)
 [![License](https://poser.pugx.org/artesaos/warehouse/license.svg)](https://packagist.org/packages/artesaos/warehouse)
 
-## Table of Contents
+## O que é Warehouse V2?
 
-- <a href="#installation">Installation</a>
-    - <a href="#composer">Composer</a>
-    - <a href="#laravel">Laravel</a>
-- <a href="#methods">Methods</a>
-    - <a href="#artesaoswarehousecontractsrepositoryinterface">RepositoryInterface</a>
-    - <a href="#artesaoswarehousecontractsrepositorycriteriainterface">RepositoryCriteriaInterface</a>
-    - <a href="#artesaoswarehousecontractspresenterinterface">PresenterInterface</a>
-    - <a href="#artesaoswarehousecontractscriteriainterface">CriteriaInterface</a>
-- <a href="#usage">Usage</a>
-	- <a href="#create-a-model">Create a Model</a>
-	- <a href="#create-a-repository">Create a Repository</a>
-	- <a href="#use-methods">Use methods</a>
-	- <a href="#create-a-criteria">Create a Criteria</a>
-	- <a href="#using-the-criteria-in-a-controller">Using the Criteria in a Controller</a>
-	- <a href="#using-the-requestcriteria">Using the RequestCriteria</a>
-- <a href="#presenters">Presenters</a>
-    - <a href="#fractal-presenter">Fractal Presenter</a>
-        - <a href="#create-a-presenter">Create a Fractal Presenter</a>
-    - <a href="#enabling-in-your-repository-1">Enabling in your Repository</a>
+Warehouse v2 é um pacote um pouco átipico, já que você pode usa-lo sem precisar baixar ele. Ele se classificaria melhor como uma demonstração pronta para o uso..
 
-## Installation
+Muito se fala sobre o padrão de projeto Repository, básicamente ele é uma camada a mais entre sua aplicação e o banco de dados, no caso do Laravel sendo responsável direto por agir sobre seus models e queries.
 
-### Composer
+### O que é *Repository Pattern* ?
 
-Add `artesaos/warehouse` to the "require" section of your `composer.json` file.
+Básicamente é a camada onde você executa seus comandos no banco de dados.
 
-```json
-	"artesaos/warehouse": "1.0.*"
-```
+Há muita filosofia por trás desse modelo. No seu modo mais puro os métodos de um repositório nao retornam objetos  complexos ou que possuam alguma dependencia, retornam arrays ou objetos simples (*StdClass*). Isso por que um de seus objetivos é permitir a troca de um repositório que trabalha com MySQL por exemplo, por um que trabalhe com MongoDB.
 
-Run `composer update` to get the latest version of the package.
+#### O mundo real hoje
 
-### Laravel
+OK! Tudo muito lindo, no papel. Não são todos os projetos que precisam de uma abordagem assim, se você usa o Laravel abrir mão do Eloquent não é algo que todos cojitem fazer. E trocar de banco de dados no Laravel não é uma tarefa tão complexa, graças ao Eloquent.
 
-In your `config/app.php` add `'Artesaos\Warehouse\Providers\WarehouseServiceProvider'` to the end of the `providers` array:
+> Devido a facilidade e praticidade que o Eloquent e Collections trazem, este pacote nao retorna objetos planos e sim objetos Eloquent e Collections.
+
+Muitos não sabem e outros se esquecem que outro objetivo de um repositório é organizar e centralizar suas consultas e até mesmo regras de negócio. Essa é a principal abordagem que o Warehouse V2 pretende suprir.
+
+-----------------
+
+## Instalando
+
+Execute `composer require artesaos/warehouse 2.x-dev`
+
+No arquivo `config/app.php` adcione o service provider `Artesaos\Warehouse\WarehouseServiceProvider`
 
 ```php
-'providers' => array(
-    ...,
-    'Artesaos\Warehouse\Providers\WarehouseServiceProvider',
-),
+'providers' => [
+    // ...
+    Artesaos\Warehouse\WarehouseServiceProvider::class,
+    // ...
+],
 ```
 
-Publish Configuration
+> Este processo não é obrigatório. Você só precisa fazer isso caso esteja usando o Fractal.
 
-```shell
-php artisan vendor:publish --provider="Artesaos\Warehouse\Providers\WarehouseServiceProvider"
-```
+## Como usar
 
-## Methods
+Warehouse v2 é um pacote base, ele implementa o básico sem nenhuma regra de negocio definida.
+Há duas classes base: `BaseRepository` e `AbstractCrudRepository`
 
-### Artesaos\Warehouse\Contracts\RepositoryInterface
-
-- all($columns = array('*'))
-- paginate($limit = null, $columns = ['*'])
-- find($id, $columns = ['*'])
-- findByField($field, $value, $columns = ['*'])
-- create(array $attributes)
-- update(array $attributes, $id)
-- delete($id)
-- with(array $relations);
-- getFieldsSearchable();
-
-
-### Artesaos\Warehouse\Contracts\RepositoryCriteriaInterface
-
-- pushCriteria(CriteriaInterface $criteria)
-- getCriteria()
-- getByCriteria(CriteriaInterface $criteria)
-- skipCriteria($status = true)
-- getFieldsSearchable()
-
-### Artesaos\Warehouse\Contracts\PresenterInterface
-
-- present($data);
-
-### Artesaos\Warehouse\Contracts\CriteriaInterface
-
-- apply($model, RepositoryInterface $repository);
-
-## Usage
-
-### Create a Model
-
-Create your model normally, but it is important to define the attributes that can be filled from the input form data.
+### BaseRepository
+Esta classe implementa o contrato `BaseRepository`, que possui três assinaturas:
 
 ```php
-namespace App;
-
-class Post extends Eloquent { // or Ardent, Or any other Model Class
-
-    protected $fillable = [
-        'title',
-        'author',
-        ...
-     ];
-
-     ...
-}
+ /**
+  * Returns all records.
+  * If $take is false then brings all records
+  * If $paginate is true returns Paginator instance.
+  *
+  * @param int  $take
+  * @param bool $paginate
+  *
+  * @return EloquentCollection|Paginator
+  */
+  public function getAll($take = 15, $paginate = true);
 ```
-
-### Create a Repository
 
 ```php
-namespace App;
-
-use Artesaos\Warehouse\Eloquent\BaseRepository;
-
-class PostRepository extends BaseRepository {
-    
-    /**
-     * Specify Model class name
-     *
-     * @return string
-     */
-    function model()
-    {
-        return "App\\Post";
-    }
-}
+/**
+ * Retrieves a record by his id
+ * If $fail is true fires ModelNotFoundException. When no record is found.
+ *
+ * @param int     $id
+ * @param bool $fail
+ *
+ * @return Model
+ */
+ public function findByID($id, $fail = true);
 ```
-
-### Use methods
 
 ```php
-namespace App\Http\Controllers;
-
-use App\PostRepository;
-
-class PostsController extends BaseController {
-
-    /**
-     * @var PostRepository
-     */
-    protected $repository;
-
-    public function __construct(PostRepository $repository){
-        $this->repository = $repository;
-    }
-    
-    ....
-}
+/**
+ * @param string $column
+ * @param string|null $key
+ *
+ * @return \Illuminate\Support\Collection|array
+ */
+public function lists($column, $key = null);
 ```
 
-Find all results in Repository
+Já na implementação, `BaseRepository` disponibiliza dois metodos protegidos `newQuery()` e `doQuery($query = null, $take = 15, $paginate = true)`. Eles são amplamente usados nos repositórios.
+
+#### newQuery
+
+*newQuery* retorna um objeto [QueryBuilder](https://github.com/laravel/framework/blob/5.1/src/Illuminate/Database/Eloquent/Builder.php) do eloquent, a partir da propriedade `modelClass`.
 
 ```php
-$posts = $this->repository->all();
-```
-
-Find all results in Repository with pagination
-
-```php
-$posts = $this->repository->paginate($limit = null, $columns = ['*']);
-```
-
-Find by result by id
-
-```php
-$post = $this->repository->find($id);
-```
-
-Find by result by field name
-
-```php
-$posts = $this->repository->findByField('country_id','15');
-```
-
-Create new entry in Repository
-
-```php
-$post = $this->repository->create( Input::all() );
-```
-
-Update entry in Repository
-
-```php
-$post = $this->repository->update( Input::all(), $id );
-```
-
-Delete entry in Repository
-
-```php
-$this->repository->delete($id)
-```
-
-### Create a Criteria
-
-Criteria is a way to change the repository of the query by applying specific conditions according to their need. You can add multiple Criteria in your repository
-
-```php
-
-use Artesaos\Warehouse\Contracts\RepositoryInterface; 
-use Artesaos\Warehouse\Contracts\CriteriaInterface;
-
-class MyCriteria implements CriteriaInterface {
-
-    public function apply($model, RepositoryInterface $repository)
-    {
-        $query = $model->where('user_id','=', Auth::user()->id );
-        return $query;
-    }
-}
-```
-
-### Using the Criteria in a Controller
-
-```php
-
-namespace App\Http\Controllers;
-use App\PostRepository;
-
-class PostsController extends BaseController {
-
-    /**
-     * @var PostRepository
-     */
-    protected $repository;
-
-    public function __construct(PostRepository $repository){
-        $this->repository = $repository;
-    }
-
-
-    public function index()
-    {
-        $this->repository->pushCriteria(new MyCriteria());
-        $posts = $this->repository->all();
-		...
-    }
-
-}
-```
-
-Getting results from Criteria
-
-```php
-$posts = $this->repository->getByCriteria(new MyCriteria());
-```
-
-Setting the default Criteria in Repository
-
-```php
-use Artesaos\Warehouse\Eloquent\BaseRepository;
-
-class PostRepository extends BaseRepository {
-   
-    public function boot(){
-        $this->pushCriteria(new MyCriteria());
-        $this->pushCriteria(new AnotherCriteria());
-        ...
-    }
-    
-    function model(){
-       return "App\\Post";
-    }
-}
-```
-
-### Skip criteria defined in the repository
-
-Use *skipCriteria* before any method in the repository
-
-```php
-
-$posts = $this->repository->skipCriteria()->all();
-
-```
-
-
-### Using the RequestCriteria
-
-RequestCriteria is a standard Criteria implementation. It enables filters to perform in the repository from parameters sent in the request.
-
-You can perform a dynamic search, filter the data and customize the queries
-
-To use the Criteria in your repository, you can add a new criteria in the boot method of your repository, or directly use in your controller, in order to filter out only a few requests
-
-####Enabling in your Repository
-
-```php
-use Artesaos\Warehouse\Eloquent\BaseRepository;
-use Artesaos\Warehouse\Criteria\RequestCriteria;
-
-
-class PostRepository extends BaseRepository {
-
-	/**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'name',
-        'email'
-    ];
-
-    public function boot(){
-        $this->pushCriteria(app('Artesaos\Warehouse\Criteria\RequestCriteria'));
-        ...
-    }
-    
-    function model(){
-       return "App\\Post";
-    }
-}
-```
-
-Remember, you need to define which fields from the model can be searchable.
-
-In your repository set **$fieldSearchable** with the name of the fields to be searchable.
-
-```php
-protected $fieldSearchable = [
-	'name',
-	'email'
-];
-```
-
-You can set the type of condition which will be used to perform the query, the default condition is "**=**"
-
-```php
-protected $fieldSearchable = [
-	'name'=>'like',
-	'email', // Default Condition "="
-	'your_field'=>'condition'
-];
-```
-
-####Enabling in your Controller
-
-```php
-	public function index()
-    {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $posts = $this->repository->all();
-		...
-    }
-```
-
-#### Example the Criteria
-
-Request all data without filter by request
-
-*http://artesaos.local/users*
-
-```json
-[
-    {
-        "id": 1,
-        "name": "John Doe",
-        "email": "john@gmail.com",
-        "created_at": "-0001-11-30 00:00:00",
-        "updated_at": "-0001-11-30 00:00:00"
-    },
-    {
-        "id": 2,
-        "name": "Lorem Ipsum",
-        "email": "lorem@ipsum.com",
-        "created_at": "-0001-11-30 00:00:00",
-        "updated_at": "-0001-11-30 00:00:00"
-    },
-    {
-        "id": 3,
-        "name": "Laravel",
-        "email": "laravel@gmail.com",
-        "created_at": "-0001-11-30 00:00:00",
-        "updated_at": "-0001-11-30 00:00:00"
-    }
-]
-```
-
-Conducting research in the repository
-
-*http://artesaos.local/users?search=John%20Doe*
-
-or
-
-*http://artesaos.local/users?search=John&searchFields=name:like*
-
-or
-
-*http://artesaos.local/users?search=john@gmail.com&searchFields=email:=*
-
-```json
-[
-    {
-        "id": 1,
-        "name": "John Doe",
-        "email": "john@gmail.com",
-        "created_at": "-0001-11-30 00:00:00",
-        "updated_at": "-0001-11-30 00:00:00"
-    }
-]
-```
-
-Filtering fields
-
-*http://artesaos.local/users?filter=id;name*
-
-```json
-[
-    {
-        "id": 1,
-        "name": "John Doe"
-    },
-    {
-        "id": 2,
-        "name": "Lorem Ipsum"
-    },
-    {
-        "id": 3,
-        "name": "Laravel"
-    }
-]
-```
-
-Sorting the results
-
-*http://artesaos.local/users?filter=id;name&orderBy=id&sortedBy=desc*
-
-```json
-[
-    {
-        "id": 3,
-        "name": "Laravel"
-    },
-    {
-        "id": 2,
-        "name": "Lorem Ipsum"
-    },
-    {
-        "id": 1,
-        "name": "John Doe"
-    }
-]
-```
-
-####Overwrite params name
-
-You can change the name of the parameters in the configuration file **config/warehouse.php**
-
-### Presenters
-
-Presenter to wrap and render objects.
-
-#### Fractal Presenter
-
-##### Create a Transformer Class
-
-```php
-
-use App\Post;
-use League\Fractal\TransformerAbstract;
-
-class PostTransformer extends TransformerAbstract
+protected function newQuery()
 {
-    public function transform(Post $post)
-    {
-        return [
-            'id'      => (int) $post->id,
-            'title'   => $post->title,
-            'content' => $post->content
-        ];
-    }
+    return app()->make($this->modelClass)->newQuery();
 }
 ```
 
-##### Create a Presenter
+> Essa propriedade precisa ser definida em todos as classes repositório
+
+#### doQuery
+
+*doQuery* processa a query e retorna uma collection ou um objeto paginate, dependendo dos parametros passados
 
 ```php
-use Artesaos\Warehouse\Presenter\FractalPresenter;
-
-class PostPresenter extends FractalPresenter {
-
-    /**
-     * Prepare data to present
-     *
-     * @return \League\Fractal\TransformerAbstract
-     */
-    public function getTransformer()
-    {
-        return new PostTransformer();
+protected function doQuery($query = null, $take = 15, $paginate = true)
+{
+    if (is_null($query)) {
+        $query = $this->newQuery();
     }
-}
-```
 
-##### Enabling in your Repository
+    if (true == $paginate):
+        return $query->paginate($take);
+    endif;
 
-```php
-use Artesaos\Warehouse\Eloquent\BaseRepository;
-use Artesaos\Warehouse\Criteria\RequestCriteria;
-
-class PostRepository extends BaseRepository {
-
-    /**
-     * Specify Model class name
-     *
-     * @return mixed
-     */
-    function model(){
-       return "App\\Post";
+    if ($take > 0 || false != $take) {
+        $query->take($take);
     }
-    
-    /**
-     * Specify Presenter class name
-     *
-     * @return mixed
-     */
-    public function presenter()
-    {
-        return "App\\Presenter\\PostPresenter";
-    }
+
+    return $query->get();
 }
 ```
