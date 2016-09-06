@@ -2,8 +2,8 @@
 
 namespace Artesaos\Warehouse;
 
-use Artesaos\Warehouse\Contracts\FractalFactory as FractalFactoryContract;
-use Artesaos\Warehouse\Fractal\FractalFactory;
+use Artesaos\Warehouse\Contracts\Fractal\Factory as FractalFactoryContract;
+use Artesaos\Warehouse\Fractal\Factory as FractalFactory;
 use Illuminate\Support\ServiceProvider;
 
 class WarehouseServiceProvider extends ServiceProvider

@@ -3,13 +3,10 @@
 namespace Artesaos\Warehouse\Fractal;
 
 use ArrayAccess;
-use Artesaos\Warehouse\Contracts\FractalFactory as FractalFactoryContract;
+use Artesaos\Warehouse\Contracts\Fractal\Factory as FactoryContract;
 use Artesaos\Warehouse\Fractal\Transformers\GenericTransformer;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use League\Fractal\Manager as LeagueFractalFactory;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection as FractalCollection;
@@ -17,40 +14,26 @@ use League\Fractal\Resource\Item as FractalItem;
 use League\Fractal\Resource\ResourceAbstract;
 use League\Fractal\TransformerAbstract;
 
-class FractalFactory implements FractalFactoryContract
+class Factory implements FactoryContract
 {
     /**
-     * @var LeagueFractalFactory
+     * @var \League\Fractal\Manager
      */
     protected $fractal;
 
     /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @var Container
+     * @var \Illuminate\Contracts\Container\Container
      */
     private $app;
 
     /**
-     * @var Response
-     */
-    private $response;
-
-    /**
      * FractalFactory constructor.
      *
-     * @param Request         $request
-     * @param Container       $app
-     * @param ResponseFactory $response
+     * @param \Illuminate\Contracts\Container\Container $app
      */
-    public function __construct(Request $request, Container $app, ResponseFactory $response)
+    public function __construct(Container $app)
     {
-        $this->request = $request;
         $this->app = $app;
-        $this->response = $response;
     }
 
     /**
@@ -108,7 +91,7 @@ class FractalFactory implements FractalFactoryContract
      * @param string           $key
      * @param string|null      $value
      *
-     * @return void
+     * @return ResourceAbstract
      */
     protected function addFractalMeta(ResourceAbstract $resource, $key, $value = null)
     {
@@ -119,68 +102,8 @@ class FractalFactory implements FractalFactoryContract
         } else {
             $resource->setMetaValue($key, $value);
         }
-    }
 
-    /**
-     * @param $data
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function responseFractal(ResourceAbstract $data)
-    {
-        $fractal = $this->getFractalFactory()->createData($data)->toArray();
-
-        return $this->response->json($fractal);
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return array
-     */
-    public function getRequestIncludes($key = 'include')
-    {
-        $include = $this->request->get($key, '');
-
-        if (empty($include)) {
-            return [];
-        }
-
-        $include = explode(',', $include);
-
-        return $include;
-    }
-
-    /**
-     * @return void
-     */
-    protected function loadFractalIncludes()
-    {
-        $include = $this->getRequestIncludes();
-
-        if (!empty($include)) {
-            $this->getFractalFactory()->parseIncludes($include);
-        }
-    }
-
-    /**
-     * @param ArrayAccess $item
-     * @param             $include
-     */
-    protected function modelIncludes($item, $include)
-    {
-        if ($item instanceof Model) {
-            $item->load($include);
-        }
-    }
-
-    /**
-     * @param ArrayAccess $collection
-     * @param             $include
-     */
-    protected function collectionIncludes($collection, $include)
-    {
-        $collection->load($include);
+        return $resource;
     }
 
     /**
@@ -194,54 +117,34 @@ class FractalFactory implements FractalFactoryContract
     }
 
     /**
-     * @param array $metas
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function makeEmptyResponse(array $metas = [])
-    {
-        $resource = $this->makeFractalItem([], $this->getTransformer());
-
-        $this->addFractalMeta($resource, $metas);
-
-        return $this->responseFractal($resource);
-    }
-
-    /**
      * @param ArrayAccess         $item
      * @param array               $meta
      * @param TransformerAbstract $transformer
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return ArrayAccess
      */
-    public function makeItemResponse(ArrayAccess $item, array $meta = [], TransformerAbstract $transformer = null)
+    public function makeItem(ArrayAccess $item, array $meta = [], TransformerAbstract $transformer = null)
     {
-        $this->loadFractalIncludes();
+        $transformerInstance = $this->getTransformer($transformer);
 
-        $include = $this->getRequestIncludes();
+        $resource = $this->makeFractalItem($item, $transformerInstance);
 
-        $this->modelIncludes($item, $include);
+        $resource = $this->addFractalMeta($resource, $meta);
 
-        $resource = $this->makeFractalItem($item, $this->getTransformer($transformer));
+        $fractal = $this->getFractalFactory()->createData($resource)->toArray();
 
-        $this->addFractalMeta($resource, $meta);
-
-        return $this->responseFractal($resource);
+        return $fractal;
     }
 
     /**
-     * @param ArrayAccess              $collection
+     * @param \ArrayAccess              $collection
      * @param array                    $meta
      * @param TransformerAbstract|null $transformer
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \ArrayAccess
      */
-    public function makeCollectionResponse(ArrayAccess $collection, array $meta = [], TransformerAbstract $transformer = null)
+    public function makeCollection(ArrayAccess $collection, array $meta = [], TransformerAbstract $transformer = null)
     {
-        $this->loadFractalIncludes();
-
-        $this->collectionIncludes($collection, $this->getRequestIncludes());
-
         if ($this->isPaged($collection)) {
             $paginator = $collection;
             $collection = $collection->getIterator();
@@ -251,8 +154,10 @@ class FractalFactory implements FractalFactoryContract
             $resource = $this->makeFractalCollection($collection, $this->getTransformer($transformer));
         }
 
-        $this->addFractalMeta($resource, $meta);
+        $resource = $this->addFractalMeta($resource, $meta);
 
-        return $this->responseFractal($resource);
+        $fractal = $this->getFractalFactory()->createData($resource)->toArray();
+
+        return $fractal;
     }
 }
