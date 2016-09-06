@@ -1,37 +1,38 @@
 {
-  "name": "artesaos/warehouse",
-  "description": "Artesãos Warehouse V2 - A simple and direct approach to repositories!",
-  "keywords": ["laravel5", "laravel", "repository", "eloquent", "model", "warehouse"],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Vinicius Reis",
-      "email": "luiz.vinicius73@gmail.com"
-    }
-  ],
-  "require": {
-    "php": ">=5.4.0",
-    "illuminate/database": "~5",
-    "illuminate/support": "~5",
-    "illuminate/pagination": "~5",
-    "illuminate/contracts": "~5"
+    "name": "artesaos/warehouse",
+    "description": "Artesãos Warehouse V2 - A simple and direct approach to repositories!",
+    "keywords": ["laravel5", "laravel", "repository", "eloquent", "model", "warehouse"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vinicius Reis",
+            "email": "luiz.vinicius73@gmail.com"
+        },
+        {
+            "name": "Diego Hernandes",
+            "email": "diego@hernandev.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/database": "~5",
+        "illuminate/support": "~5",
+        "illuminate/pagination": "~5",
+        "illuminate/contracts": "~5",
+        "league/fractal": "~0.14"
 
-  },
-  "require-dev": {
-    "league/fractal": "~0.13",
-    "illuminate/container": "~5",
-    "illuminate/http": "~5"
-  },
-  "suggest": {
-    "league/fractal": "Form json response use fractal (0.13+)"
-  },
-  "autoload": {
-    "psr-4": {
-      "Artesaos\\Warehouse\\": "src/"
-    }
-  },
-  "config": {
-    "preferred-install": "dist"
-  },
-  "minimum-stability": "stable"
+    },
+    "require-dev": {
+        "illuminate/container": "~5",
+        "illuminate/http": "~5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Artesaos\\Warehouse\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
 }

@@ -1,12 +1,13 @@
 <?php
 
-namespace Artesaos\Warehouse\Contracts;
+namespace Artesaos\Warehouse\Contracts\Operations;
 
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\AbstractPaginator as Paginator;
+use Artesaos\Warehouse\Contracts\Repository;
 
-interface BaseRepository
+/**
+ * Interface ReadRecords.
+ */
+interface ReadRecords extends Repository
 {
     /**
      * Returns all records.
@@ -16,7 +17,7 @@ interface BaseRepository
      * @param int  $take
      * @param bool $paginate
      *
-     * @return EloquentCollection|Paginator
+     * @return \Illuminate\Support\Collection|\Illuminate\Pagination\AbstractPaginator
      */
     public function getAll($take = 15, $paginate = true);
 
@@ -37,5 +38,5 @@ interface BaseRepository
      *
      * @return \Illuminate\Support\Collection|array
      */
-    public function lists($column, $key = null);
+    public function pluck($column, $key = null);
 }

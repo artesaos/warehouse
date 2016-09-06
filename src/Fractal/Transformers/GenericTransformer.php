@@ -14,15 +14,13 @@ class GenericTransformer extends TransformerAbstract
      */
     public function transform($data)
     {
-        if (is_array($data)):
+        if (is_array($data)) {
             return $data;
-        endif;
+        }
 
-        if (is_object($data)):
-            if ($data instanceof Arrayable):
-                return $data->toArray();
-        endif;
-        endif;
+        if (is_object($data) && $data instanceof Arrayable) {
+            return $data->toArray();
+        }
 
         return (array) $data;
     }
