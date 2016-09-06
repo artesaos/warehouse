@@ -1,5 +1,4 @@
 # Artesãos Warehouse V2 - A simple and direct approach to repositories!
->>>>>>> develop
 
 [![Total Downloads](https://poser.pugx.org/artesaos/warehouse/downloads.svg)](https://packagist.org/packages/artesaos/warehouse)
 [![Latest Stable Version](https://poser.pugx.org/artesaos/warehouse/v/stable.svg)](https://packagist.org/packages/artesaos/warehouse)
