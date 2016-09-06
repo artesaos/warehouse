@@ -7,7 +7,7 @@
 
 ## O que é Warehouse V2?
 
-Warehouse v2 é um pacote um pouco átipico, já que você pode usa-lo sem precisar baixar ele. Ele se classificaria melhor como uma demonstração pronta para o uso..
+Warehouse v2 é um pacote um pouco atípico, já que você pode usá-lo sem precisar baixá-lo. Ele se classificaria melhor como uma demonstração pronta para o uso.
 
 Muito se fala sobre o padrão de projeto Repository, básicamente ele é uma camada a mais entre sua aplicação e o banco de dados, no caso do Laravel sendo responsável direto por agir sobre seus models e queries.
 
@@ -15,13 +15,13 @@ Muito se fala sobre o padrão de projeto Repository, básicamente ele é uma cam
 
 Básicamente é a camada onde você executa seus comandos no banco de dados.
 
-Há muita filosofia por trás desse modelo. No seu modo mais puro os métodos de um repositório nao retornam objetos  complexos ou que possuam alguma dependencia, retornam arrays ou objetos simples (*StdClass*). Isso por que um de seus objetivos é permitir a troca de um repositório que trabalha com MySQL por exemplo, por um que trabalhe com MongoDB.
+Há muita filosofia por trás desse modelo. No seu modo mais puro os métodos de um repositório não retornam objetos  complexos ou que possuam alguma dependência, retornam arrays ou objetos simples (*StdClass*). Isso por que um de seus objetivos é permitir a troca de um repositório que trabalha com MySQL por exemplo, por um que trabalhe com MongoDB.
 
 #### O mundo real hoje
 
-OK! Tudo muito lindo, no papel. Não são todos os projetos que precisam de uma abordagem assim, se você usa o Laravel abrir mão do Eloquent não é algo que todos cojitem fazer. E trocar de banco de dados no Laravel não é uma tarefa tão complexa, graças ao Eloquent.
+OK! Tudo muito lindo, no papel. Não são todos os projetos que precisam de uma abordagem assim, se você usa o Laravel, abrir mão do Eloquent não é algo que todos cogitem fazer. E trocar de banco de dados no Laravel não é uma tarefa tão complexa, graças ao Eloquent.
 
-> Devido a facilidade e praticidade que o Eloquent e Collections trazem, este pacote nao retorna objetos planos e sim objetos Eloquent e Collections.
+> Devido a facilidade e praticidade que o Eloquent e Collections trazem, este pacote não retorna objetos planos e sim objetos Eloquent e Collections.
 
 Muitos não sabem e outros se esquecem que outro objetivo de um repositório é organizar e centralizar suas consultas e até mesmo regras de negócio. Essa é a principal abordagem que o Warehouse V2 pretende suprir.
 
@@ -45,7 +45,7 @@ No arquivo `config/app.php` adcione o service provider `Artesaos\Warehouse\Wareh
 
 ## Como usar
 
-Warehouse v2 é um pacote base, ele implementa o básico sem nenhuma regra de negocio definida.
+Warehouse v2 é um pacote base, ele implementa o básico sem nenhuma regra de negócio definida.
 Há duas classes base: `BaseRepository` e `AbstractCrudRepository`
 
 ### BaseRepository
@@ -88,11 +88,11 @@ Esta classe implementa o contrato `BaseRepository`, que possui três assinaturas
 public function lists($column, $key = null);
 ```
 
-Já na implementação, `BaseRepository` disponibiliza dois metodos protegidos `newQuery()` e `doQuery($query = null, $take = 15, $paginate = true)`. Eles são amplamente usados nos repositórios.
+Já na implementação, `BaseRepository` disponibiliza dois métodos protegidos `newQuery()` e `doQuery($query = null, $take = 15, $paginate = true)`. Eles são amplamente usados nos repositórios.
 
 #### newQuery
 
-*newQuery* retorna um objeto [QueryBuilder](https://github.com/laravel/framework/blob/5.1/src/Illuminate/Database/Eloquent/Builder.php) do eloquent, a partir da propriedade `modelClass`.
+*newQuery* retorna um objeto [QueryBuilder](https://github.com/laravel/framework/blob/5.1/src/Illuminate/Database/Eloquent/Builder.php) do eloquent, à partir da propriedade `modelClass`.
 
 ```php
 protected function newQuery()
