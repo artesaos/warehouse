@@ -9,11 +9,11 @@
 
 Warehouse v2 é um pacote um pouco atípico, já que você pode usá-lo sem precisar baixá-lo. Ele se classificaria melhor como uma demonstração pronta para o uso.
 
-Muito se fala sobre o padrão de projeto Repository, básicamente ele é uma camada a mais entre sua aplicação e o banco de dados, no caso do Laravel sendo responsável direto por agir sobre seus models e queries.
+Muito se fala sobre o padrão de projeto Repository, basicamente ele é uma camada a mais entre sua aplicação e o banco de dados, no caso do Laravel sendo responsável direto por agir sobre seus models e queries.
 
 ### O que é *Repository Pattern* ?
 
-Básicamente é a camada onde você executa seus comandos no banco de dados.
+Basicamente é a camada onde você executa seus comandos no banco de dados.
 
 Há muita filosofia por trás desse modelo. No seu modo mais puro os métodos de um repositório não retornam objetos  complexos ou que possuam alguma dependência, retornam arrays ou objetos simples (*StdClass*). Isso por que um de seus objetivos é permitir a troca de um repositório que trabalha com MySQL por exemplo, por um que trabalhe com MongoDB.
 
