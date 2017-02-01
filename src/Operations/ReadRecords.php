@@ -34,8 +34,8 @@ trait ReadRecords
     }
 
     /**
-     * Retrieves a record by his id
-     * If fail is true $ fires ModelNotFoundException.
+     * Retrieves a record by its id
+     * If $fail is true, a ModelNotFoundException is throwed.
      *
      * @param int  $id
      * @param bool $fail
