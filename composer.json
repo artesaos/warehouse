@@ -31,6 +31,13 @@
             "Artesaos\\Warehouse\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Artesaos\\Warehouse\\WarehouseServiceProvider"
+            ]
+        }
+    },
     "config": {
         "preferred-install": "dist"
     },
