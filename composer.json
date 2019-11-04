@@ -14,21 +14,28 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "illuminate/database": "~5",
-        "illuminate/support": "~5",
-        "illuminate/pagination": "~5",
-        "illuminate/contracts": "~5",
+        "php": "^7.2",
+        "illuminate/database": "~6",
+        "illuminate/support": "~6",
+        "illuminate/pagination": "~6",
+        "illuminate/contracts": "~6",
         "league/fractal": "~0.14"
 
     },
     "require-dev": {
-        "illuminate/container": "~5",
-        "illuminate/http": "~5"
+        "illuminate/container": "~6",
+        "illuminate/http": "~6"
     },
     "autoload": {
         "psr-4": {
             "Artesaos\\Warehouse\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Artesaos\\Warehouse\\WarehouseServiceProvider"
+            ]
         }
     },
     "config": {
